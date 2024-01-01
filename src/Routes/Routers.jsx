@@ -19,6 +19,8 @@ import UserHome from "../pages/Dashboard/UserHome/UserHome";
 import Checkout from "../pages/Dashboard/Checkout/Checkout";
 import ConfirmOrder from "../pages/Dashboard/ConfirmOrder/ConfirmOrder";
 import OrderProducts from "../pages/Dashboard/OrderProducts/OrderProducts";
+import SuccessPage from "../pages/Dashboard/Payment/SuccessPage";
+import FailedPage from "../pages/Dashboard/Payment/FailedPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -73,6 +75,14 @@ export const router = createBrowserRouter([
       {
         path: "myCart",
         element: <MyCart></MyCart>,
+      },
+      {
+        path: "success",
+        element: <SuccessPage></SuccessPage>,
+      },
+      {
+        path: "failed",
+        element: <FailedPage></FailedPage>,
       },
       {
         path: "userHome",

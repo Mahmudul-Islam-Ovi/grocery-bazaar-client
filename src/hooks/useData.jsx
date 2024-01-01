@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BaseUrl } from "../component/BaseUrl/BaseUrl";
 
 const useData = () => {
   const [menuData, setMenuData] = useState([]);
@@ -6,7 +7,7 @@ const useData = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://grocery-bazaar-server.vercel.app/menu")
+    fetch(`${BaseUrl}/menu`)
       .then((res) => res.json())
       .then((data) => {
         setMenuData(data);

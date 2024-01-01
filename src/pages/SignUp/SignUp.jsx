@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 import useAuth from "../../hooks/useAuth";
+import { BaseUrl } from "../../component/BaseUrl/BaseUrl";
 const SignUp = () => {
   const {
     register,
@@ -22,7 +23,7 @@ const SignUp = () => {
       updateUserProfile(data.name, data.photoURL)
         .then(() => {
           const saveUser = { name: data.name, email: data.email };
-          fetch("https://grocery-bazaar-server.vercel.app/users", {
+          fetch(`${BaseUrl}/users`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(saveUser),

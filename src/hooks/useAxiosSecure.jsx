@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
+import { BaseUrl } from "../component/BaseUrl/BaseUrl";
 
 const axiosSecure = axios.create({
-  baseURL: "https://grocery-bazaar-server.vercel.app",
+  baseURL: `${BaseUrl}`,
 });
 const useAxiosSecure = () => {
   const navigate = useNavigate();

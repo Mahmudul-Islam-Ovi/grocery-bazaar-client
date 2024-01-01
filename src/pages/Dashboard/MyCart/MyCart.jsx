@@ -3,6 +3,7 @@ import useCart from "../../../hooks/useCart";
 import { Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { BaseUrl } from "../../../component/BaseUrl/BaseUrl";
 
 const MyCart = () => {
   const { cart, total, refetch } = useCart();
@@ -20,7 +21,7 @@ const MyCart = () => {
       confirmButtonText: "Yes, Remove it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://grocery-bazaar-server.vercel.app/carts/${product._id}`, {
+        fetch(`${BaseUrl}/carts/${product._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -45,7 +46,7 @@ const MyCart = () => {
         <title>Grocery | My Cart</title>
       </Helmet>
       <div className="flex gap-20 flex-col lg:flex-row">
-        <div className="mx-auto lg:w-[500px] w-[400px] flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2">
+        <div className="mx-auto lg:w-[500px]  flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2">
           <h2 className="text-3xl font-bold">Total Items : {cart?.length}</h2>
           <ul className="flex flex-col divide-y divide-gray-200">
             {cart?.map((product) => (
@@ -90,7 +91,7 @@ const MyCart = () => {
         {/* Order summary */}
         <section
           aria-labelledby="summary-heading"
-          className=" mb-10  md:w-[350px] rounded-md bg-white lg:col-span-4 lg:mt-0 lg:p-0"
+          className=" mb-10 lg:w-[350px]  rounded-md bg-white lg:col-span-4 lg:mt-0 lg:p-0"
         >
           <h2
             id="summary-heading"

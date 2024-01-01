@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../../component/SectionTitle/SectionTitle";
-import useCart from "../../../hooks/useCart";
 import { useState } from "react";
+import { BaseUrl } from "../../../component/BaseUrl/BaseUrl";
 
 const OrderProducts = () => {
-  const { total } = useCart();
   const [isConfirmed, setConfirmed] = useState(false);
   const {
     isPending,
@@ -15,9 +14,7 @@ const OrderProducts = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://grocery-bazaar-server.vercel.app/orders"
-      );
+      const res = await fetch(`${BaseUrl}/orders`);
       return res.json();
     },
   });
@@ -73,16 +70,21 @@ const OrderProducts = () => {
                   Number :{" "}
                   <span className="font-bold text-blue-600">{or?.number}</span>
                 </h1>
+                <h1 className="text-lg font-semibold">
+                  Email :{" "}
+                  <span className="font-bold text-blue-600">{or?.email}</span>
+                </h1>
                 <h1 className="text-lg font-bold">Order Products</h1>
                 <div>
-                  <ul>
+                  <ol type="A">
                     {or?.orderProduct?.map((product) => (
                       <li key={product._id}>{product.name}</li>
                     ))}
-                  </ul>
+                  </ol>
                 </div>
                 <h1 className="font-bold">
-                  Total Price : <span className="text-pink-700"> {total}</span>
+                  Total Price :{" "}
+                  <span className="text-pink-700"> {or?.totalAmount}</span>
                 </h1>
                 <button
                   onClick={handleConfirmClick}

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { BaseUrl } from "../component/BaseUrl/BaseUrl";
 
 const useProducts = () => {
   const {
@@ -10,9 +11,7 @@ const useProducts = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://grocery-bazaar-server.vercel.app/products"
-      );
+      const res = await fetch(`${BaseUrl}/products`);
       return res.json();
     },
   });

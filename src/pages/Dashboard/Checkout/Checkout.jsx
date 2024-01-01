@@ -1,18 +1,18 @@
 import { Home, ChevronRight, ShoppingCart } from "lucide-react";
 import useCart from "../../../hooks/useCart";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
+import useAuth from "../../../hooks/useAuth";
 
 const steps = ["Checkout", "Personal Information", "Confirmation"];
 const Checkout = () => {
+  const { user } = useAuth();
   const { cart, total } = useCart();
   const [axiosSecure] = useAxiosSecure();
   const { register, handleSubmit } = useForm();
-
-  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     Swal.fire({
@@ -31,27 +31,13 @@ const Checkout = () => {
           personName: name,
           number,
           address,
+          email: user?.email || "unregistered",
           orderProduct: cart,
+          totalAmount: total + 120,
         };
-        console.log("after distracting", orderData, cart);
-
         axiosSecure.post("/orders", orderData).then((data) => {
-          if (data.data.insertedId) {
-            Swal.fire({
-              title: "Confirm!",
-              text: "Your order is successful.",
-              icon: "success",
-            });
-            navigate("/dashboard/confirmation");
-          }
+          window.location.replace(data.data.url);
         });
-
-        // Swal.fire({
-        //   title: "Confirm!",
-        //   text: "Your order is successful.",
-        //   icon: "success",
-        // });
-        // navigate("/dashboard/confirmation");
       }
     });
   };
@@ -100,7 +86,7 @@ const Checkout = () => {
                 <div className="flex flex-1">
                   <p className="text-sm font-medium">
                     You have <strong>{cart?.length}</strong> items in cart. Sub
-                    total is <strong>{total + 120}</strong>
+                    total is <strong>{total + 120} BDT</strong>
                   </p>
                 </div>
                 <Link
@@ -164,7 +150,7 @@ const Checkout = () => {
                     type="submit"
                     className="w-full text-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                   >
-                    Confirm Order
+                    Confirm To Pay
                   </button>
                   {/* <Link
                     to={"/dashboard/confirmation"}

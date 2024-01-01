@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import { app } from "./../firebase/firebase.config";
 import axios from "axios";
+import { BaseUrl } from "../component/BaseUrl/BaseUrl";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -36,18 +37,6 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  // const googleSignIn = async () => {
-  //   setLoading(true);
-  //   try {
-  //     await signInWithPopup(auth, googleProvider);
-  //   } catch (error) {
-  //     console.error("Google Sign-In Error:", error);
-  //     // Handle the error or log additional details
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
@@ -67,7 +56,7 @@ const AuthProvider = ({ children }) => {
 
       if (user) {
         axios
-          .post("https://grocery-bazaar-server.vercel.app/jwt", {
+          .post(`${BaseUrl}/jwt`, {
             email: user.email,
           })
           .then((data) => {

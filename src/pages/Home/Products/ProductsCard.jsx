@@ -22,7 +22,7 @@ const ProductsCard = ({ product }) => {
         category,
         email: user.email,
       };
-      const url = `https://grocery-bazaar-server.vercel.app/carts`;
+      const url = `http://localhost:5000/carts`;
       fetch(url, {
         method: "POST",
         headers: {
